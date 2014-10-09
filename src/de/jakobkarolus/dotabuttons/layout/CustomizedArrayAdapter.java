@@ -3,7 +3,7 @@ package de.jakobkarolus.dotabuttons.layout;
 import java.util.List;
 
 import de.jakobkarolus.dotabuttons.R;
-import de.jakobkarolus.dotabuttons.model.ListEntry;
+import de.jakobkarolus.dotabuttons.model.HeroResponse;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -20,10 +20,10 @@ import android.widget.TextView;
  *
  */
 @SuppressLint("InflateParams")
-public class CustomizedArrayAdapter extends ArrayAdapter<ListEntry>{
+public class CustomizedArrayAdapter extends ArrayAdapter<HeroResponse>{
 
 	public CustomizedArrayAdapter(Context context, int resource,
-			List<ListEntry> objects) {
+			List<HeroResponse> objects) {
 		super(context, resource, objects);
 	}
 	
@@ -38,7 +38,7 @@ public class CustomizedArrayAdapter extends ArrayAdapter<ListEntry>{
 			v = vi.inflate(R.layout.dota_buttons_list_entry, null);
 		}
 		
-		ListEntry item = getItem(position);
+		HeroResponse item = getItem(position);
 		
 		if(item != null){
 			
@@ -46,10 +46,10 @@ public class CustomizedArrayAdapter extends ArrayAdapter<ListEntry>{
 			TextView name = (TextView) v.findViewById(R.id.name);
 			
 			if(image != null)
-				image.setImageResource(item.getImage());
+				image.setImageResource(item.getHero().getImageForHero());
 			
 			if(name != null)
-				name.setText(item.getName());
+				name.setText(item.getResponse());
 		}
 		
 		return v;
