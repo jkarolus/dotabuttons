@@ -118,7 +118,10 @@ public enum Heros {
 	WINDRANGER(R.drawable.windranger_icon),
 	WITCH_DOCTOR(R.drawable.witch_doctor_icon),
 	WRAITH_KING(R.drawable.wraith_king_icon),
-	ZEUS(R.drawable.zeus_icon);
+	ZEUS(R.drawable.zeus_icon),
+	
+	REPORTER(R.drawable.reporter_icon),
+	CREEP(R.drawable.creep_icon);
 	
 	
 	
