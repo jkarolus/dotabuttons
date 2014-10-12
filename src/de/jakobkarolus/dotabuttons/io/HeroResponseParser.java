@@ -89,7 +89,7 @@ public class HeroResponseParser {
 		entries.add(new HeroResponse("Oink oink oink", ENIGMA, R.raw.enigma_oink));
 		entries.add(new HeroResponse("Nobody temporarily ends my life", GYROCOPTER, R.raw.gyrocopter_temporarily_end_life));
 		entries.add(new HeroResponse("Shiny red bullets", GYROCOPTER, R.raw.gyrocopter_red_bullets));
-		entries.add(new HeroResponse("Operation SNPUHHPRZ", NATURES_PROPHET, R.raw.gyrocopter_operation_snpuhhprz));
+		entries.add(new HeroResponse("Operation SNPUHHPRZ", GYROCOPTER, R.raw.gyrocopter_operation_snpuhhprz));
 		entries.add(new HeroResponse("Surprise shitpickle", GYROCOPTER, R.raw.gyrocopter_suprise_shitpickle));
 		entries.add(new HeroResponse("More easily overestimate my tankiness", BRISTLEBACK, R.raw.bristleback_overestimate_tankiness));
 		entries.add(new HeroResponse("Universe not the same without me", INVOKER, R.raw.invoker_universe_not_the_same));
@@ -114,6 +114,12 @@ public class HeroResponseParser {
 		entries.add(new HeroResponse("Axe is axe", AXE, R.raw.axe_interview));
 		entries.add(new HeroResponse("Free farmin'", JUGGERNAUT, R.raw.juggernaut_free_farming));
 		entries.add(new HeroResponse("Axehole", TERRORBLADE, R.raw.terrorblade_axehole));
+		entries.add(new HeroResponse("He was gone just like that", ENIGMA, R.raw.enigma_he_was_gone));
+		entries.add(new HeroResponse("Friends help kill Kunkka", TIDEHUNTER, R.raw.tidehunter_kunkka_kill));
+		entries.add(new HeroResponse("Tidehunter okay", TIDEHUNTER, R.raw.tidehunter_okay));
+		entries.add(new HeroResponse("Who's the carry", TERRORBLADE, R.raw.terrorblade_i_am_the_carry));
+		entries.add(new HeroResponse("Badass flaming footsteps", TERRORBLADE, R.raw.terrorblade_badass_footsteps));
+		entries.add(new HeroResponse("I can do it, too", TERRORBLADE, R.raw.terrorblade_illusion));
 		return entries;
 		
 	}
