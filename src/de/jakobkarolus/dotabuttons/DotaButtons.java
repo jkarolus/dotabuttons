@@ -1,46 +1,57 @@
 package de.jakobkarolus.dotabuttons;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
-import java.util.Vector;
 
-import de.jakobkarolus.dotabuttons.io.HeroResponseParser;
-import de.jakobkarolus.dotabuttons.layout.CustomizedArrayAdapter;
-import de.jakobkarolus.dotabuttons.model.HeroResponse;
-import android.app.Activity;
-import android.app.ActionBar;
-import android.app.Fragment;
 import android.app.ListActivity;
+import android.content.res.AssetFileDescriptor;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-import android.os.Build;
+import de.jakobkarolus.dotabuttons.io.HeroResponseParser;
+import de.jakobkarolus.dotabuttons.layout.CustomizedArrayAdapter;
+import de.jakobkarolus.dotabuttons.model.HeroResponse;
 
+
+/**
+ * custom {@link ListActivity} that provides access to our hero responses
+ * 
+ * @author Jakob
+ *
+ */
 public class DotaButtons extends ListActivity {
 	
+	private static final String TAG = DotaButtons.class.getName();
+	
 	private CustomizedArrayAdapter buttons;
+	private MediaPlayer player;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		List<HeroResponse> entries = new Vector<HeroResponse>();
-		try {
-			entries = HeroResponseParser.loadHeroResponseData();
-		} catch (FileNotFoundException e) {
-			Toast.makeText(getApplicationContext(), "Cannot find or access Hero response file. Please reinstall!", Toast.LENGTH_LONG).show();
-		}
-		
+		//load entries and associate with ArrayAdapter
+		List<HeroResponse> entries = HeroResponseParser.loadHeroResponseData();
 		buttons =  new CustomizedArrayAdapter(this, R.layout.dota_buttons_list_entry, entries);
-		
 		getListView().setAdapter(buttons);
+
+		
+		//init MediaPlayer
+		player = new MediaPlayer();
+		player.setAudioStreamType(AudioManager.STREAM_MUSIC);
+		player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+			
+			@Override
+			public void onCompletion(MediaPlayer mp) {
+				releasePlayer();
+			}
+		});
 		
 	}
 
@@ -70,9 +81,42 @@ public class DotaButtons extends ListActivity {
 		super.onListItemClick(l, v, position, id);
 		HeroResponse entry = (HeroResponse) getListView().getItemAtPosition(position);
 		
-		MediaPlayer player = MediaPlayer.create(getApplicationContext(), entry.getSoundFile());
-		player.start();
+		//cancel previous playback
+		releasePlayer();
 		
+		//initialize player with new HeroResponse and start playing
+		 try {
+	            AssetFileDescriptor afd = getApplicationContext().getResources().openRawResourceFd(entry.getSoundFile());
+	            if (afd == null){
+	            	Toast.makeText(getApplicationContext(), "Couldn't decode media file", Toast.LENGTH_SHORT).show();
+	            	return;
+	            }
+
+	            player.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+	            afd.close();
+	            player.prepare();
+	            player.start();
+	            
+	            
+	        } catch (IOException ex) {
+	            Log.d(TAG, "create failed:", ex);
+	            // fall through
+	        } catch (IllegalArgumentException ex) {
+	            Log.d(TAG, "create failed:", ex);
+	           // fall through
+	        } catch (SecurityException ex) {
+	            Log.d(TAG, "create failed:", ex);
+	            // fall through
+	        }
+		
+	}
+	
+	/**
+	 * resets the player upon finishing a playback or when interrupted
+	 * 
+	 */
+	private void releasePlayer(){
+		player.reset();
 	}
 
 }

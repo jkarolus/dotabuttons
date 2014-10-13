@@ -121,6 +121,7 @@ public enum Heros {
 	ZEUS(R.drawable.zeus_icon),
 	
 	REPORTER(R.drawable.reporter_icon),
+	SHOPKEEPER(R.drawable.shopkepper_icon),
 	CREEP(R.drawable.creep_icon);
 	
 	

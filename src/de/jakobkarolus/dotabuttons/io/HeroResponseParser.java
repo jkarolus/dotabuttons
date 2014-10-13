@@ -1,17 +1,34 @@
 package de.jakobkarolus.dotabuttons.io;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import static de.jakobkarolus.dotabuttons.model.Heros.ANTIMAGE;
+import static de.jakobkarolus.dotabuttons.model.Heros.AXE;
+import static de.jakobkarolus.dotabuttons.model.Heros.BANE;
+import static de.jakobkarolus.dotabuttons.model.Heros.BRISTLEBACK;
+import static de.jakobkarolus.dotabuttons.model.Heros.CREEP;
+import static de.jakobkarolus.dotabuttons.model.Heros.ENIGMA;
+import static de.jakobkarolus.dotabuttons.model.Heros.FACELESS_VOID;
+import static de.jakobkarolus.dotabuttons.model.Heros.GYROCOPTER;
+import static de.jakobkarolus.dotabuttons.model.Heros.INVOKER;
+import static de.jakobkarolus.dotabuttons.model.Heros.JUGGERNAUT;
+import static de.jakobkarolus.dotabuttons.model.Heros.NATURES_PROPHET;
+import static de.jakobkarolus.dotabuttons.model.Heros.PUDGE;
+import static de.jakobkarolus.dotabuttons.model.Heros.REPORTER;
+import static de.jakobkarolus.dotabuttons.model.Heros.RUBICK;
+import static de.jakobkarolus.dotabuttons.model.Heros.SHOPKEEPER;
+import static de.jakobkarolus.dotabuttons.model.Heros.TERRORBLADE;
+import static de.jakobkarolus.dotabuttons.model.Heros.TIDEHUNTER;
+import static de.jakobkarolus.dotabuttons.model.Heros.TIMBERSAW;
+import static de.jakobkarolus.dotabuttons.model.Heros.TINKER;
+import static de.jakobkarolus.dotabuttons.model.Heros.TUSK;
+
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Scanner;
 import java.util.Vector;
 
 import de.jakobkarolus.dotabuttons.R;
 import de.jakobkarolus.dotabuttons.model.HeroResponse;
-
-import static de.jakobkarolus.dotabuttons.model.Heros.*;
+import de.jakobkarolus.dotabuttons.model.Heros;
 
 /**
  * loads the available hero respoonses
@@ -21,15 +38,12 @@ import static de.jakobkarolus.dotabuttons.model.Heros.*;
  */
 public class HeroResponseParser {
 	
-	public static final String HERO_RESPONSE_FILE = "res/hero_responses.txt";
-	
 	/**
 	 * loads hero responses (hard-coded)
 	 * 
-	 * @return
-	 * @throws FileNotFoundException
+	 * @return {@link List} of {@link HeroResponse} sorted alphabetically
 	 */
-	public static List<HeroResponse> loadHeroResponseData() throws FileNotFoundException{
+	public static List<HeroResponse> loadHeroResponseData(){
 		
 		List<HeroResponse> entries = new Vector<HeroResponse>(); 
 		
@@ -120,6 +134,24 @@ public class HeroResponseParser {
 		entries.add(new HeroResponse("Who's the carry", TERRORBLADE, R.raw.terrorblade_i_am_the_carry));
 		entries.add(new HeroResponse("Badass flaming footsteps", TERRORBLADE, R.raw.terrorblade_badass_footsteps));
 		entries.add(new HeroResponse("I can do it, too", TERRORBLADE, R.raw.terrorblade_illusion));
+		entries.add(new HeroResponse("What are you gonna do about it?", SHOPKEEPER, R.raw.shopkeeper_bitch));
+		entries.add(new HeroResponse("Naah", PUDGE, R.raw.pudge_naah));
+		entries.add(new HeroResponse("What a rip-off", TERRORBLADE, R.raw.terrorblade_what_a_ripoff));
+		entries.add(new HeroResponse("I'll get over it", TERRORBLADE, R.raw.terrorblade_ill_get_over_it));
+		entries.add(new HeroResponse("Terrorblade in the jungle", TERRORBLADE, R.raw.terrorblade_in_the_jungle));
+		
+		Collections.sort(entries, new Comparator<HeroResponse>(){
+
+			@Override
+			public int compare(HeroResponse lhs, HeroResponse rhs) {
+				Heros left = lhs.getHero();
+				Heros right = rhs.getHero();
+				
+				return left.compareTo(right);
+				
+			}
+			
+		});
 		return entries;
 		
 	}
