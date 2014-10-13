@@ -139,6 +139,7 @@ public class HeroResponseParser {
 		entries.add(new HeroResponse("What a rip-off", TERRORBLADE, R.raw.terrorblade_what_a_ripoff));
 		entries.add(new HeroResponse("I'll get over it", TERRORBLADE, R.raw.terrorblade_ill_get_over_it));
 		entries.add(new HeroResponse("Terrorblade in the jungle", TERRORBLADE, R.raw.terrorblade_in_the_jungle));
+		entries.add(new HeroResponse("What's makin' all that ruckus", TERRORBLADE, R.raw.terrorblade_making_all_that_ruckus));
 		
 		Collections.sort(entries, new Comparator<HeroResponse>(){
 
