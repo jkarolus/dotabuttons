@@ -8,11 +8,16 @@ import android.content.res.AssetFileDescriptor;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 import de.jakobkarolus.dotabuttons.io.HeroResponseParser;
 import de.jakobkarolus.dotabuttons.layout.CustomizedArrayAdapter;
@@ -25,7 +30,7 @@ import de.jakobkarolus.dotabuttons.model.HeroResponse;
  * @author Jakob
  *
  */
-public class DotaButtons extends ListActivity {
+public class DotaButtons extends ListActivity{
 	
 	private static final String TAG = DotaButtons.class.getName();
 	
@@ -36,10 +41,12 @@ public class DotaButtons extends ListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+        
 		//load entries and associate with ArrayAdapter
 		List<HeroResponse> entries = HeroResponseParser.loadHeroResponseData();
 		buttons =  new CustomizedArrayAdapter(this, R.layout.dota_buttons_list_entry, entries);
-		getListView().setAdapter(buttons);
+		//getListView().setAdapter(buttons);
+		setListAdapter(buttons);
 
 		
 		//init MediaPlayer
@@ -50,6 +57,13 @@ public class DotaButtons extends ListActivity {
 			@Override
 			public void onCompletion(MediaPlayer mp) {
 				releasePlayer();
+			}
+		});
+		player.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+			
+			@Override
+			public void onPrepared(MediaPlayer mp) {
+				mp.start();
 			}
 		});
 		
@@ -94,9 +108,7 @@ public class DotaButtons extends ListActivity {
 
 	            player.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
 	            afd.close();
-	            player.prepare();
-	            player.start();
-	            
+	            player.prepareAsync();	            
 	            
 	        } catch (IOException ex) {
 	            Log.d(TAG, "create failed:", ex);
