@@ -122,8 +122,8 @@ public enum Heros {
 	
 	REPORTER(R.drawable.reporter_icon),
 	SHOPKEEPER(R.drawable.shopkepper_icon),
-	CREEP(R.drawable.creep_icon);
-	
+	CREEP(R.drawable.creep_icon),
+	GLADOS(R.drawable.glados_icon);
 	
 	
 	private Heros(int image){
