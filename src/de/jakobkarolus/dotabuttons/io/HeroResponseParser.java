@@ -19,17 +19,35 @@ import de.jakobkarolus.dotabuttons.model.Heros;
  */
 public class HeroResponseParser {
 	
+	
+	private static void sort(List<HeroResponse> entries){
+		
+		Collections.sort(entries, new Comparator<HeroResponse>(){
+
+			@Override
+			public int compare(HeroResponse lhs, HeroResponse rhs) {
+				Heros left = lhs.getHero();
+				Heros right = rhs.getHero();
+				
+				if(left.compareTo(right) == 0)
+					return lhs.getResponse().compareTo(rhs.getResponse());
+				
+				return left.compareTo(right);
+				
+			}
+			
+		});
+	}
+	
 	/**
-	 * loads hero responses (hard-coded)
+	 * loads hero responses of Dota 2 Reporter(hard-coded)
 	 * 
 	 * @return {@link List} of {@link HeroResponse} sorted alphabetically
 	 */
-	public static List<HeroResponse> loadHeroResponseData(){
+	public static List<HeroResponse> loadReporterResponseData(){
 		
 		List<HeroResponse> entries = new Vector<HeroResponse>(); 
 		
-		entries.add(new HeroResponse("You can keep your magic", TINKER, R.raw.tink_ability_laser_01));
-		entries.add(new HeroResponse("Magic is an abomination", ANTIMAGE, R.raw.anti_magicuser_01));
 		entries.add(new HeroResponse("I don't like magic", ANTIMAGE, R.raw.anti_mage_dont_like_magic));
 		entries.add(new HeroResponse("Is this your card", ANTIMAGE, R.raw.anti_mage_is_this_your_card));
 		entries.add(new HeroResponse("This is a team game?", REPORTER, R.raw.reporter_this_is_a_team_game));
@@ -121,6 +139,23 @@ public class HeroResponseParser {
 		entries.add(new HeroResponse("I'll get over it", TERRORBLADE, R.raw.terrorblade_ill_get_over_it));
 		entries.add(new HeroResponse("Terrorblade in the jungle", TERRORBLADE, R.raw.terrorblade_in_the_jungle));
 		entries.add(new HeroResponse("What's makin' all that ruckus", TERRORBLADE, R.raw.terrorblade_making_all_that_ruckus));
+
+		sort(entries);
+		return entries;
+		
+	}
+
+	/**
+	 * loads hero responses of Dota 2 (hard-coded)
+	 * 
+	 * @return {@link List} of {@link HeroResponse} sorted alphabetically
+	 */
+	public static List<HeroResponse> loadDotaHeroResponseData() {
+		
+		List<HeroResponse> entries = new Vector<HeroResponse>(); 
+
+		entries.add(new HeroResponse("You can keep your magic", TINKER, R.raw.tink_ability_laser_01));
+		entries.add(new HeroResponse("Magic is an abomination", ANTIMAGE, R.raw.anti_magicuser_01));
 		entries.add(new HeroResponse("Lord of Avernus", ABADDON, R.raw.abad_spawn_02));
 		entries.add(new HeroResponse("First blood", ABADDON, R.raw.abad_firstblood_01));
 		entries.add(new HeroResponse("Very cunning", ABADDON, R.raw.abad_move_19));
@@ -366,23 +401,9 @@ public class HeroResponseParser {
 		entries.add(new HeroResponse("What you're doing is wrong", GLADOS, R.raw.glados_killing_spree_ann_glados_kill_holy_03));
 		entries.add(new HeroResponse("Great teamwork", GLADOS, R.raw.glados_killing_spree_ann_glados_kill_ownage_01));
 		
-		Collections.sort(entries, new Comparator<HeroResponse>(){
-
-			@Override
-			public int compare(HeroResponse lhs, HeroResponse rhs) {
-				Heros left = lhs.getHero();
-				Heros right = rhs.getHero();
-				
-				if(left.compareTo(right) == 0)
-					return lhs.getResponse().compareTo(rhs.getResponse());
-				
-				return left.compareTo(right);
-				
-			}
-			
-		});
+		sort(entries);
 		return entries;
-		
+
 	}
 
 }

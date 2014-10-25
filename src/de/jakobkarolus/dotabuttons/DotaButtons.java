@@ -3,21 +3,19 @@ package de.jakobkarolus.dotabuttons;
 import java.io.IOException;
 import java.util.List;
 
+import android.app.ActionBar;
+import android.app.ActionBar.Tab;
+import android.app.FragmentTransaction;
 import android.app.ListActivity;
 import android.content.res.AssetFileDescriptor;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 import de.jakobkarolus.dotabuttons.io.HeroResponseParser;
 import de.jakobkarolus.dotabuttons.layout.CustomizedArrayAdapter;
@@ -33,22 +31,28 @@ import de.jakobkarolus.dotabuttons.model.HeroResponse;
 public class DotaButtons extends ListActivity{
 	
 	private static final String TAG = DotaButtons.class.getName();
+	public static final String DOTA_2 = "Dota 2";
+	public static final String DOTA_2_REPORTER = "Reporter";
+
 	
-	private CustomizedArrayAdapter buttons;
+	private CustomizedArrayAdapter buttonsReporter;
+	private CustomizedArrayAdapter buttonsDota;
+	
+
 	private MediaPlayer player;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-        
-		//load entries and associate with ArrayAdapter
-		List<HeroResponse> entries = HeroResponseParser.loadHeroResponseData();
-		buttons =  new CustomizedArrayAdapter(this, R.layout.dota_buttons_list_entry, entries);
-		//getListView().setAdapter(buttons);
-		setListAdapter(buttons);
-
+		loadResponses();
+		setupMediaPlayer();
+		setupActionBar();
 		
+	}
+
+
+	private void setupMediaPlayer() {
 		//init MediaPlayer
 		player = new MediaPlayer();
 		player.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -66,7 +70,48 @@ public class DotaButtons extends ListActivity{
 				mp.start();
 			}
 		});
+	}
+
+
+	private void setupActionBar() {
+		final ActionBar actionBar = getActionBar();
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		
+		// Create a tab listener that is called when the user changes tabs.
+	    ActionBar.TabListener tabListener = new ActionBar.TabListener() {
+			@Override
+			public void onTabSelected(Tab tab, FragmentTransaction ft) {
+				//cancel playback
+				releasePlayer();
+
+				if(tab.getText().equals(DOTA_2))
+					setListAdapter(buttonsDota);
+				else
+					setListAdapter(buttonsReporter);
+			}
+
+			@Override
+			public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+				
+			}
+
+			@Override
+			public void onTabReselected(Tab tab, FragmentTransaction ft) {
+				
+			}
+	    };
+	    
+		actionBar.addTab(actionBar.newTab().setText(DOTA_2_REPORTER).setTabListener(tabListener));
+		actionBar.addTab(actionBar.newTab().setText(DOTA_2).setTabListener(tabListener));
+	}
+
+
+	private void loadResponses() {
+		//load entries and associate with ArrayAdapter
+		List<HeroResponse> entriesReporter = HeroResponseParser.loadReporterResponseData();
+		buttonsReporter =  new CustomizedArrayAdapter(this, R.layout.dota_buttons_list_entry, entriesReporter);
+		List<HeroResponse> entriesDota = HeroResponseParser.loadDotaHeroResponseData();
+		buttonsDota =  new CustomizedArrayAdapter(this, R.layout.dota_buttons_list_entry, entriesDota);
 	}
 
 
