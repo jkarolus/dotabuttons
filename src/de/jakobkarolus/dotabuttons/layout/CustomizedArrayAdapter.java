@@ -6,6 +6,7 @@ import de.jakobkarolus.dotabuttons.R;
 import de.jakobkarolus.dotabuttons.model.HeroResponse;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,8 +43,15 @@ public class CustomizedArrayAdapter extends ArrayAdapter<HeroResponse>{
 		
 		if(item != null){
 			
+			if(item.isNewVersion())
+				v.setBackgroundColor(Color.argb(50, 255, 153, 0));
+			else
+				v.setBackgroundColor(Color.WHITE);
+			
 			ImageView image = (ImageView) v.findViewById(R.id.image);
 			TextView name = (TextView) v.findViewById(R.id.name);
+			
+
 			
 			if(image != null)
 				image.setImageResource(item.getHero().getImageForHero());

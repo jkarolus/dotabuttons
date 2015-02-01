@@ -139,6 +139,37 @@ public class HeroResponseParser {
 		entries.add(new HeroResponse("I'll get over it", TERRORBLADE, R.raw.terrorblade_ill_get_over_it));
 		entries.add(new HeroResponse("Terrorblade in the jungle", TERRORBLADE, R.raw.terrorblade_in_the_jungle));
 		entries.add(new HeroResponse("What's makin' all that ruckus", TERRORBLADE, R.raw.terrorblade_making_all_that_ruckus));
+		
+		//Version 1.1
+		boolean newVersion = true;
+		entries.add(new HeroResponse("Gooooold!", KUNKKA, R.raw.kunkka_gold, newVersion));
+		entries.add(new HeroResponse("Dota 1 thing", KUNKKA, R.raw.kunkka_dota1_thing, newVersion));
+		entries.add(new HeroResponse("Buuuurn", ENIGMA, R.raw.enigma_burn, newVersion));
+		entries.add(new HeroResponse("Retreat with an advantage", ENIGMA, R.raw.enigma_advantage, newVersion));
+		entries.add(new HeroResponse("Poor piggy", TIDEHUNTER, R.raw.tide_poor_piggy, newVersion));
+		entries.add(new HeroResponse("Blink dagger, where are you?", TIDEHUNTER, R.raw.tide_blink_dagger, newVersion));
+		entries.add(new HeroResponse("allergic to total ownage", TERRORBLADE, R.raw.terrorblade_total_ownage, newVersion));
+		entries.add(new HeroResponse("Regret my decision", REPORTER, R.raw.reporter_decision_regret, newVersion));
+		entries.add(new HeroResponse("Totally worth it", TERRORBLADE, R.raw.terrorblade_worth_it, newVersion));
+		entries.add(new HeroResponse("My own eidolons", RUBICK, R.raw.rubick_own_eidolons, newVersion));
+		entries.add(new HeroResponse("Oh gawd, oh man", ENIGMA, R.raw.enigma_oh_gawd_oh_man, newVersion));
+		entries.add(new HeroResponse("Super creeps", CREEP, R.raw.creep_super_creep, newVersion));
+		entries.add(new HeroResponse("Puny and regular", CREEP, R.raw.creep_puny_and_regular, newVersion));
+		entries.add(new HeroResponse("Wow amazing", ENIGMA, R.raw.enigma_amazing, newVersion));
+		entries.add(new HeroResponse("That was lame", JUGGERNAUT, R.raw.jugg_lame, newVersion));
+		entries.add(new HeroResponse("Chu Chu!", TIMBERSAW, R.raw.timbersaw_chu_chu));
+		entries.add(new HeroResponse("Smoke train", TIMBERSAW, R.raw.timbersaw_smoke_train2, newVersion));
+		entries.add(new HeroResponse("Chu chu honk!", TIMBERSAW, R.raw.timbersaw_smoke_train, newVersion));
+		entries.add(new HeroResponse("Flying fuck", ENIGMA, R.raw.enigma_flying_fuck, newVersion));
+		entries.add(new HeroResponse("Just act normal", TIDEHUNTER, R.raw.tide_act_normal, newVersion));
+		entries.add(new HeroResponse("Here to save the ...", JUGGERNAUT, R.raw.jugg_safe_the_day, newVersion));
+		entries.add(new HeroResponse("Enigma kick", ENIGMA, R.raw.enigma_kick, newVersion));
+		entries.add(new HeroResponse("You and me Rubick", ENIGMA, R.raw.enigma_you_and_me, newVersion));
+		entries.add(new HeroResponse("Terrorblade farming", REPORTER, R.raw.reporter_terror_farming, newVersion));
+		entries.add(new HeroResponse("Fuck wards", ENIGMA, R.raw.enigma_fuck_wards, newVersion));
+		entries.add(new HeroResponse("Gameplay depth", ENIGMA, R.raw.enigma_gameplay_depth, newVersion));
+		entries.add(new HeroResponse("Sorry", TIDEHUNTER, R.raw.tidehunter_sorry, newVersion));
+		entries.add(new HeroResponse("Bloodstone", TIMBERSAW, R.raw.timbersaw_bloodstone, newVersion));
 
 		sort(entries);
 		return entries;

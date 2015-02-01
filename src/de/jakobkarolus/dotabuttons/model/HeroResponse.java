@@ -13,12 +13,31 @@ public class HeroResponse {
 	private Heros heroName;
 	private int soundFile;
 	
+	private boolean newVersion;
 	
+	
+	public boolean isNewVersion() {
+		return newVersion;
+	}
+
+	public void setNewVersion(boolean newVersion) {
+		this.newVersion = newVersion;
+	}
+
 	public HeroResponse(String response, Heros heroName, int soundFile) {
 		super();
 		this.response = response;
 		this.heroName = heroName;
 		this.setSoundFile(soundFile);
+		this.newVersion = false;
+	}
+	
+	public HeroResponse(String response, Heros heroName, int soundFile, boolean newVersion) {
+		super();
+		this.response = response;
+		this.heroName = heroName;
+		this.setSoundFile(soundFile);
+		this.newVersion = newVersion;
 	}
 
 
