@@ -3,24 +3,30 @@ package de.jakobkarolus.dotabuttons;
 import java.io.IOException;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.app.FragmentTransaction;
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.res.AssetFileDescriptor;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 import de.jakobkarolus.dotabuttons.io.HeroResponseParser;
 import de.jakobkarolus.dotabuttons.layout.CustomizedArrayAdapter;
 import de.jakobkarolus.dotabuttons.model.HeroResponse;
-
 
 /**
  * custom {@link ListActivity} that provides access to our hero responses
@@ -124,15 +130,41 @@ public class DotaButtons extends ListActivity{
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
+			
+		FragmentTransaction ft = getFragmentManager().beginTransaction();
+		InfoDialog fragment = new InfoDialog();
+		fragment.show(ft, "InfoDialog");
+		
+		return true;
 	}
+	
+	/**
+	 * 
+	 * display a dialog containing info about DotaButtons
+	 * 
+	 * @author Jakob
+	 * 
+	 */
+	public class InfoDialog extends DialogFragment {
+
+
+		@Override
+		public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+			builder.setTitle("DotaButtons");
+			builder.setMessage("By: Jakob Karolus\nVersion 1.1");
+			builder.setNegativeButton(R.string.back,
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+							InfoDialog.this.getDialog().cancel();
+						}
+					});
+
+			return builder.create();
+		}
+	}
+
 	
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
