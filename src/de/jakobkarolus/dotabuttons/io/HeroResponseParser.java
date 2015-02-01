@@ -157,7 +157,7 @@ public class HeroResponseParser {
 		entries.add(new HeroResponse("Puny and regular", CREEP, R.raw.creep_puny_and_regular, newVersion));
 		entries.add(new HeroResponse("Wow amazing", ENIGMA, R.raw.enigma_amazing, newVersion));
 		entries.add(new HeroResponse("That was lame", JUGGERNAUT, R.raw.jugg_lame, newVersion));
-		entries.add(new HeroResponse("Chu Chu!", TIMBERSAW, R.raw.timbersaw_chu_chu));
+		entries.add(new HeroResponse("Chu Chu!", TIMBERSAW, R.raw.timbersaw_chu_chu, newVersion));
 		entries.add(new HeroResponse("Smoke train", TIMBERSAW, R.raw.timbersaw_smoke_train2, newVersion));
 		entries.add(new HeroResponse("Chu chu honk!", TIMBERSAW, R.raw.timbersaw_smoke_train, newVersion));
 		entries.add(new HeroResponse("Flying fuck", ENIGMA, R.raw.enigma_flying_fuck, newVersion));
