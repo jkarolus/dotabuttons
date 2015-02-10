@@ -1,6 +1,10 @@
 package de.jakobkarolus.dotabuttons;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import android.annotation.SuppressLint;
@@ -12,10 +16,13 @@ import android.app.DialogFragment;
 import android.app.FragmentTransaction;
 import android.app.ListActivity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -44,6 +51,8 @@ public class DotaButtons extends ListActivity{
 	private CustomizedArrayAdapter buttonsReporter;
 	private CustomizedArrayAdapter buttonsDota;
 	
+	private boolean sendAudio;
+	private int flags;
 
 	private MediaPlayer player;
 
@@ -54,6 +63,14 @@ public class DotaButtons extends ListActivity{
 		loadResponses();
 		setupMediaPlayer();
 		setupActionBar();
+		
+		Intent intent = getIntent();
+		if(intent.getAction() == "com.whatsapp.action.WHATSAPP_RECORDING"){
+			sendAudio = true;
+			flags = intent.getFlags();
+		}
+		else
+			sendAudio = false;
 		
 	}
 
@@ -164,6 +181,12 @@ public class DotaButtons extends ListActivity{
 			return builder.create();
 		}
 	}
+	
+	@Override
+	protected void onStop() {
+		releasePlayer();
+		super.onStop();
+	}
 
 	
 	@Override
@@ -175,28 +198,66 @@ public class DotaButtons extends ListActivity{
 		//cancel previous playback
 		releasePlayer();
 		
-		//initialize player with new HeroResponse and start playing
-		 try {
-	            AssetFileDescriptor afd = getApplicationContext().getResources().openRawResourceFd(entry.getSoundFile());
-	            if (afd == null){
-	            	Toast.makeText(getApplicationContext(), "Couldn't decode media file", Toast.LENGTH_SHORT).show();
-	            	return;
-	            }
+		if(!sendAudio){
+		
+			//initialize player with new HeroResponse and start playing
+			 try {
+		            AssetFileDescriptor afd = getApplicationContext().getResources().openRawResourceFd(entry.getSoundFile());
+		            if (afd == null){
+		            	Toast.makeText(getApplicationContext(), "Couldn't decode media file", Toast.LENGTH_SHORT).show();
+		            	return;
+		            }
+	
+		            player.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+		            afd.close();
+		            player.prepareAsync();	            
+		            
+		        } catch (IOException ex) {
+		            Log.d(TAG, "create failed:", ex);
+		            // fall through
+		        } catch (IllegalArgumentException ex) {
+		            Log.d(TAG, "create failed:", ex);
+		           // fall through
+		        } catch (SecurityException ex) {
+		            Log.d(TAG, "create failed:", ex);
+		            // fall through
+		        }
+		}
+		else{
+			
+			String fileName= getExternalCacheDir().getAbsolutePath() + "/" + entry.getSoundFile() + ".mp3";
 
-	            player.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
-	            afd.close();
-	            player.prepareAsync();	            
-	            
-	        } catch (IOException ex) {
-	            Log.d(TAG, "create failed:", ex);
-	            // fall through
-	        } catch (IllegalArgumentException ex) {
-	            Log.d(TAG, "create failed:", ex);
-	           // fall through
-	        } catch (SecurityException ex) {
-	            Log.d(TAG, "create failed:", ex);
-	            // fall through
-	        }
+			try{
+				InputStream in = getResources().openRawResource(entry.getSoundFile());
+				FileOutputStream out = new FileOutputStream(fileName, false);
+
+				byte[] buff = new byte[1024];
+			    int read = 0;
+
+			    try {
+			       while ((read = in.read(buff)) > 0) {
+			          out.write(buff, 0, read);
+			       }
+			    } catch (IOException e) {
+					Toast.makeText(this, "Cant access media file!", Toast.LENGTH_SHORT).show();;
+				} finally {
+			         try {
+						in.close();
+				        out.close();
+					} catch (IOException e) {
+						Toast.makeText(this, "Cant access media file!", Toast.LENGTH_SHORT).show();;
+						}
+			    }
+				
+			} catch (FileNotFoundException e) {
+				Toast.makeText(this, "Cant access media file!", Toast.LENGTH_SHORT).show();;
+			}
+			
+
+			Intent intent = new Intent(Intent.ACTION_SEND, Uri.fromFile(new File(fileName)));
+			this.setResult(RESULT_OK, intent);
+			finish();
+		}
 		
 	}
 	

@@ -43,10 +43,11 @@ public class CustomizedArrayAdapter extends ArrayAdapter<HeroResponse>{
 		
 		if(item != null){
 			
+			
 			if(item.isNewVersion())
 				v.setBackgroundColor(Color.argb(50, 255, 153, 0));
 			else
-				v.setBackgroundColor(Color.WHITE);
+				v.setBackgroundColor(Color.argb(100, 255, 255, 255));
 			
 			ImageView image = (ImageView) v.findViewById(R.id.image);
 			TextView name = (TextView) v.findViewById(R.id.name);
