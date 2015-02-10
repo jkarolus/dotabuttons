@@ -170,7 +170,7 @@ public class DotaButtons extends ListActivity{
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder.setTitle("DotaButtons");
-			builder.setMessage("By: Jakob Karolus\nVersion 1.1");
+			builder.setMessage("By: Jakob Karolus\nVersion 1.2");
 			builder.setNegativeButton(R.string.back,
 					new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int id) {
